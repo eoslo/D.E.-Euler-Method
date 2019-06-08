@@ -17,7 +17,7 @@
 
     calculate.onclick = function() {
         var k = 0;
-        var n = 10;
+        var n = 20;
         var y = parseFloat(getById("yzero").value);
         var x = parseFloat(getById("xzero").value);
         
@@ -26,16 +26,18 @@
 
         // if simple Euler
         if (selectBox.value == 1) {
-            let valores = []
+            let valoresX = [];
+            let valoresY = [];
             for (var j = 1; j <= n; j++) {
                 x = x + h;
                 // eval() is evil, but we need this now.
                 k = h * eval(getById("mainEquation").value);
                 y = y + k;
-                valores.push({x: x, y: y});
+                valoresX.push(x);
+                valoresY.push(y);
                 tablePrint += "<tr><td>" + j + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
             }
-            renderizar(valores);
+            renderizar(valoresX, valoresY)
         }
 
         if (selectBox.value == 2) {
@@ -51,7 +53,8 @@
             var fX = finalX.value;
 
             var m1, m2;
-            let valores = [];
+            let valoresX = [];
+            let valoresY = [];
             for (i = 1; xArr[i - 1] < fX; i++) {
                 w = 100.0;
                 xArr[i] = xArr[i - 1] + h;
@@ -66,10 +69,12 @@
                     c = c + 1;
                 }
                 yArr[i] = s[c];
-                valores.push({x: xArr[i], y: yArr[i]});
+
+                valoresX.push(xArr[i]);
+                valoresY.push(yArr[i]);
             }
             console.log("The respective values of xArr and yArr are\n     xArr yArr");
-            renderizar(valores)
+            renderizar(valoresX, valoresY)
             for (j = 0; j < i; j++) {
                 // answer at last. Aaah.
                 tablePrint += "<tr><td>" + (j + 1) + "</td><td>" + xArr[j] + "</td><td>" + yArr[j] + "</td></tr>";
@@ -79,7 +84,8 @@
         if (selectBox.value == 3) {
             var fX = finalX.value;
             var i = 0;
-            let valores = [];
+            let valoresX = [];
+            let valoresY = [];
             while (x < fX) {
                 m1 = eulerFunction(x, y);
                 m2 = eulerFunction((x + h / 2), (y + m1 * h / 2));
@@ -89,10 +95,11 @@
                 y = y + m * h;
                 x = x + h;
                 i++;
-                valores.push({x: x, y: y});
+                valoresX.push(x);
+                valoresY.push(y);
                 tablePrint += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
             }
-            renderizar(valores);
+            renderizar(valoresX, valoresY)
         }
 
         getById("tableBody").innerHTML = tablePrint;
@@ -114,17 +121,16 @@
         return document.getElementById(id);
     }
 
-    function renderizar(valores) {
-        console.log(valores)
+    function renderizar(valoresX, valoresY) {
 
         var ctx = document.getElementById('grafico');
         var grafico = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: valoresX,
                 datasets: [{
                     label: '# of Votes',
-                    data: valores,
+                    data: valoresY,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
