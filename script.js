@@ -21,18 +21,22 @@
         var y = parseFloat(getById("yzero").value);
         var x = parseFloat(getById("xzero").value);
         var h = parseFloat(getById("h").value);
-        var tablePrint = "";
+        var impresionTabla = "";
 
         // Si se selecciona Método de Euler:
         if (metodoSeleccionado.value == 1) {
+            let valores = []
             for (var i = 1; i <= n; i++) {
                 x = x + h;
                 k = h * eval(getById("mainEquation").value);
                 y = y + k;
 
                 // Impresion en tabla
-                tablePrint += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
+                impresionTabla += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
+                valores.push({x: x, y: y});
+                impresionTabla += "<tr><td>" + j + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
             }
+            renderizar(valores);
         }
 
         // Si se selecciona Método de Euler (Mejorado):
@@ -46,7 +50,7 @@
             s[0] = yArr[0];
             var fX = finalX.value;
             var m1, m2;
-
+            let valores = [];
             for (i = 1; xArr[i - 1] < fX; i++) {
                 w = 100.0;
                 xArr[i] = xArr[i - 1] + h;
@@ -61,12 +65,14 @@
                     c = c + 1;
                 }
                 yArr[i] = s[c];
+                valores.push({x: xArr[i], y: yArr[i]});
             }
 
             console.log("Los valores respectivos de xArr y yArr son\n     xArr yArr");
+            renderizar(valores)
             for (j = 0; j < i; j++) {
                 // answer at last. Aaah.
-                tablePrint += "<tr><td>" + (j + 1) + "</td><td>" + xArr[j] + "</td><td>" + yArr[j] + "</td></tr>";
+                impresionTabla += "<tr><td>" + (j + 1) + "</td><td>" + xArr[j] + "</td><td>" + yArr[j] + "</td></tr>";
             }
         }
 
@@ -74,6 +80,7 @@
         if (metodoSeleccionado.value == 3) {
             var fX = finalX.value;
             var i = 0;
+            let valores = [];
             while (x < fX) {
                 m1 = funcionEuler(x, y);
                 m2 = funcionEuler((x + h / 2), (y + m1 * h / 2));
@@ -83,11 +90,13 @@
                 y = y + m * h;
                 x = x + h;
                 i++;
-                tablePrint += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
+                valores.push({x: x, y: y});
+                impresionTabla += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
             }
+            renderizar(valores);
         }
 
-        getById("tableBody").innerHTML = tablePrint;
+        getById("tableBody").innerHTML = impresionTabla;
     };
 
     // Función de Euler individual:
@@ -106,5 +115,46 @@
         return document.getElementById(id);
     }
 
+    function renderizar(valores) {
+        console.log(valores)
+
+        var ctx = document.getElementById('grafico');
+        var grafico = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: valores,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
 
 })(document, window);
