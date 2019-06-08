@@ -44,19 +44,19 @@
 
         // Si se selecciona Método de Euler (Mejorado):
         if (metodoSeleccionado.value == 2) {
+            let valoresX = [];
+            let valoresY = [];
+
             var xArr = [];
             var yArr = [];
             xArr[0] = x;
             yArr[0] = y; x
             var fX = finalX.value;
-            
             var s = [];
             s[0] = yArr[0];
             var m = [];
             var m1, m2;
 
-            let valoresX = [];
-            let valoresY = [];
             for (i = 1; xArr[i - 1] < fX; i++) {
                 w = 100.0;
                 xArr[i] = xArr[i - 1] + h;
