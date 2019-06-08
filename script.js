@@ -16,41 +16,43 @@
 
     // Inicialización del Calculo 
     calculate.onclick = function() {
-        var k = 0;
         var n = 10;
-        var y = parseFloat(getById("yzero").value);
         var x = parseFloat(getById("xzero").value);
+        var y = parseFloat(getById("yzero").value);
         var h = parseFloat(getById("h").value);
         var impresionTabla = "";
 
         // Si se selecciona Método de Euler:
         if (metodoSeleccionado.value == 1) {
             let valores = []
+            
             for (var i = 1; i <= n; i++) {
-                x = x + h;
-                k = h * eval(getById("mainEquation").value);
-                y = y + k;
+                x = x + h
+                y = y + (h * eval(getById("mainEquation").value))
 
                 // Impresion en tabla
                 impresionTabla += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
                 valores.push({x: x, y: y});
-                impresionTabla += "<tr><td>" + j + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
             }
+
             renderizar(valores);
         }
 
         // Si se selecciona Método de Euler (Mejorado):
         if (metodoSeleccionado.value == 2) {
-            var s = [];
-            var yArr = [];
             var xArr = [];
-            var m = [];
-            yArr[0] = y;
+            var yArr = [];
             xArr[0] = x;
-            s[0] = yArr[0];
+            yArr[0] = y; x
             var fX = finalX.value;
+            
+            var s = [];
+            s[0] = yArr[0];
+            var m = [];
             var m1, m2;
+
             let valores = [];
+
             for (i = 1; xArr[i - 1] < fX; i++) {
                 w = 100.0;
                 xArr[i] = xArr[i - 1] + h;
@@ -69,11 +71,12 @@
             }
 
             console.log("Los valores respectivos de xArr y yArr son\n     xArr yArr");
-            renderizar(valores)
-            for (j = 0; j < i; j++) {
-                // answer at last. Aaah.
-                impresionTabla += "<tr><td>" + (j + 1) + "</td><td>" + xArr[j] + "</td><td>" + yArr[j] + "</td></tr>";
+            // Impresion en tabla
+            for (i = 0; i < i; i++) {
+                impresionTabla += "<tr><td>" + (i + 1) + "</td><td>" + xArr[i] + "</td><td>" + yArr[i] + "</td></tr>";
             }
+
+            renderizar(valores)
         }
 
         // Si se selecciona el método Runge Kutta
@@ -115,6 +118,7 @@
         return document.getElementById(id);
     }
 
+    // Función para renderizar
     function renderizar(valores) {
         console.log(valores)
 
