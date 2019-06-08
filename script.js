@@ -20,6 +20,7 @@
         var n = 10;
         var y = parseFloat(getById("yzero").value);
         var x = parseFloat(getById("xzero").value);
+        
         var h = parseFloat(getById("h").value);
         var tablePrint = "";
 
