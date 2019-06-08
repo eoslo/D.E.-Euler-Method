@@ -16,7 +16,7 @@
 
     // Inicialización del Calculo 
     calculate.onclick = function() {
-        var n = 10;
+        var n = parseInt(getById("n").value);
         var x = parseFloat(getById("xzero").value);
         var y = parseFloat(getById("yzero").value);
         var h = parseFloat(getById("h").value);
