@@ -1,13 +1,12 @@
-/**
- * @author  tatocaster <tatocaster.me>
- */
 (function(document, window) {
 
-    var selectBox = getById('de_method');
+    // Variables Globales
+    var metodoSeleccionado = getById('de_method');
     var finalX = getById('final_valueX');
     var calculateBtn = getById('calculate');
 
-    selectBox.onchange = function() {
+    // Display según metodo seleccionado
+    metodoSeleccionado.onchange = function() {
         if (this.value == 2 || this.value == 3) {
             finalX.style.display = "block";
         } else {
@@ -15,33 +14,35 @@
         }
     };
 
+    // Inicialización del Calculo 
     calculate.onclick = function() {
         var k = 0;
         var n = 20;
         var y = parseFloat(getById("yzero").value);
         var x = parseFloat(getById("xzero").value);
-        
         var h = parseFloat(getById("h").value);
-        var tablePrint = "";
+        var impresionTabla = "";
 
         // if simple Euler
         if (selectBox.value == 1) {
             let valoresX = [];
             let valoresY = [];
-            for (var j = 1; j <= n; j++) {
+        // Si se selecciona Método de Euler:
+        if (metodoSeleccionado.value == 1) {
+            for (var i = 1; i <= n; i++) {
                 x = x + h;
-                // eval() is evil, but we need this now.
                 k = h * eval(getById("mainEquation").value);
                 y = y + k;
                 valoresX.push(x);
                 valoresY.push(y);
-                tablePrint += "<tr><td>" + j + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
+                // Impresion en tabla
+                impresionTabla += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
             }
             renderizar(valoresX, valoresY)
         }
 
-        if (selectBox.value == 2) {
-            // initialisation
+        // Si se selecciona Método de Euler (Mejorado):
+        if (metodoSeleccionado.value == 2) {
             var s = [];
             var yArr = [];
             var xArr = [];
@@ -49,9 +50,7 @@
             yArr[0] = y;
             xArr[0] = x;
             s[0] = yArr[0];
-
             var fX = finalX.value;
-
             var m1, m2;
             let valoresX = [];
             let valoresY = [];
@@ -73,42 +72,43 @@
                 valoresX.push(xArr[i]);
                 valoresY.push(yArr[i]);
             }
-            console.log("The respective values of xArr and yArr are\n     xArr yArr");
             renderizar(valoresX, valoresY)
+            console.log("Los valores respectivos de xArr y yArr son\n     xArr yArr");
             for (j = 0; j < i; j++) {
                 // answer at last. Aaah.
-                tablePrint += "<tr><td>" + (j + 1) + "</td><td>" + xArr[j] + "</td><td>" + yArr[j] + "</td></tr>";
+                impresionTabla += "<tr><td>" + (j + 1) + "</td><td>" + xArr[j] + "</td><td>" + yArr[j] + "</td></tr>";
             }
         }
 
-        if (selectBox.value == 3) {
+        // Si se selecciona el método Runge Kutta
+        if (metodoSeleccionado.value == 3) {
             var fX = finalX.value;
             var i = 0;
             let valoresX = [];
             let valoresY = [];
             while (x < fX) {
-                m1 = eulerFunction(x, y);
-                m2 = eulerFunction((x + h / 2), (y + m1 * h / 2));
-                m3 = eulerFunction((x + h / 2), (y + m2 * h / 2));
-                m4 = eulerFunction((x + h), (y + m3 * h));
+                m1 = funcionEuler(x, y);
+                m2 = funcionEuler((x + h / 2), (y + m1 * h / 2));
+                m3 = funcionEuler((x + h / 2), (y + m2 * h / 2));
+                m4 = funcionEuler((x + h), (y + m3 * h));
                 m = ((m1 + 2 * m2 + 2 * m3 + m4) / 6);
                 y = y + m * h;
                 x = x + h;
                 i++;
                 valoresX.push(x);
                 valoresY.push(y);
-                tablePrint += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
+                impresionTabla += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
             }
             renderizar(valoresX, valoresY)
         }
 
-        getById("tableBody").innerHTML = tablePrint;
+        getById("tableBody").innerHTML = impresionTabla;
     };
 
-
-    function eulerFunction(x, y) {
-        m = (x - y) / (x + y);
-        return m;
+    // Función de Euler individual:
+    function funcionEuler(x, y) {
+        result = (x - y) / (x + y);
+        return result;
     }
 
     function calcSlope(a, b) {
