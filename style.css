@@ -33,5 +33,5 @@ table td, table th{
 	border-collapse: collapse;
 }
 #final_valueX{
-	display: none;
+	display: block;
 }

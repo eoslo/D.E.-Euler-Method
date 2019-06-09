@@ -7,7 +7,7 @@
 
     // Display según metodo seleccionado
     metodoSeleccionado.onchange = function() {
-        if (this.value == 2 || this.value == 3) {
+        if (this.value == 1 || this.value == 2 || this.value == 3) {
             finalX.style.display = "block";
         } else {
             finalX.style.display = "none";
@@ -16,73 +16,74 @@
 
     // Inicialización del Calculo 
     calculate.onclick = function() {
-        var n = parseInt(getById("n").value);
         var y = parseFloat(getById("yzero").value);
         var x = parseFloat(getById("xzero").value);
-        var y = parseFloat(getById("yzero").value);
         var h = parseFloat(getById("h").value);
+        var funcion = getById("mainEquation").value;
         var impresionTabla = "";
 
         // Si se selecciona Método de Euler:
         if (metodoSeleccionado.value == 1) {
-            let valoresX = [];
-            let valoresY = [];
+            renderizar(euler(funcion, finalX.value, x, y, h))
+            // let valoresX = [];
+            // let valoresY = [];
             
-            for (var i = 1; i <= n; i++) {
-                x = x + h
-                y = y + (h * eval(getById("mainEquation").value))
+            // for (var i = 1; i <= finalX.value; i++) {
+            //     x = x + h
+            //     y = y + (h * eval(getById("mainEquation").value))
 
-                // Impresion en tabla
-                impresionTabla += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
+            //     // Impresion en tabla
+            //     impresionTabla += "<tr><td>" + i + "</td><td>" + Math.round(x * 100) / 100 + "</td><td>" + Math.round(y * 1000) / 1000 + "</td></tr>";
 
-                valoresX.push(x);
-                valoresY.push(y);
-            }
+            //     valoresX.push(x);
+            //     valoresY.push(y);
+            // }
 
-            renderizar(valoresX, valoresY)
+            // renderizar(valoresX, valoresY)
         }
 
         // Si se selecciona Método de Euler (Mejorado):
         if (metodoSeleccionado.value == 2) {
-            let valoresX = [];
-            let valoresY = [];
+            renderizar(eulerMejorado(funcion, finalX.value, x, y, h));
+            // let valoresX = [];
+            // let valoresY = [];
 
-            var xArr = [];
-            var yArr = [];
-            xArr[0] = x;
-            yArr[0] = y; x
-            var fX = finalX.value;
-            var s = [];
-            s[0] = yArr[0];
-            var m = [];
-            var m1, m2;
+            // var xArr = [];
+            // var yArr = [];
+            // xArr[0] = x;
+            // yArr[0] = y; x
+            // var fX = finalX.value;
+            // var s = [];
+            // s[0] = yArr[0];
+            // var m = [];
+            // var m1, m2;
 
-            for (i = 1; xArr[i - 1] < fX; i++) {
-                w = 100.0;
-                xArr[i] = xArr[i - 1] + h;
-                m[i] = calcSlope(xArr[i - 1], yArr[i - 1]);
-                c = 0;
-                while (w > 0.0001) {
-                    m1 = calcSlope(xArr[i], s[c]);
-                    m2 = (m[i] + m1) / 2;
-                    s[c + 1] = yArr[i - 1] + m2 * h;
-                    w = s[c] - s[c + 1];
-                    w = Math.abs(w);
-                    c = c + 1;
-                }
-                yArr[i] = s[c];
+            // for (i = 1; xArr[i - 1] < fX; i++) {
+            //     w = 100.0;
+            //     xArr[i] = xArr[i - 1] + h;
+            //     m[i] = calcSlope(xArr[i - 1], yArr[i - 1]);
+            //     c = 0;
+            //     while (w > 0.0001) {
+            //         m1 = calcSlope(xArr[i], s[c]);
+            //         m2 = (m[i] + m1) / 2;
+            //         s[c + 1] = yArr[i - 1] + m2 * h;
+            //         w = s[c] - s[c + 1];
+            //         w = Math.abs(w);
+            //         c = c + 1;
+            //     }
+            //     yArr[i] = s[c];
 
-                valoresX.push(xArr[i]);
-                valoresY.push(yArr[i]);
-            }
+            //     valoresX.push(xArr[i]);
+            //     valoresY.push(yArr[i]);
+            // }
 
-            console.log("Los valores respectivos de xArr y yArr son\n     xArr yArr");
-            // Impresion en tabla
-            for (j = 0; j < i; j++) {
-                impresionTabla += "<tr><td>" + (j + 1) + "</td><td>" + xArr[j] + "</td><td>" + yArr[j] + "</td></tr>";
-            }
+            // console.log("Los valores respectivos de xArr y yArr son\n     xArr yArr");
+            // // Impresion en tabla
+            // for (j = 0; j < i; j++) {
+            //     impresionTabla += "<tr><td>" + (j + 1) + "</td><td>" + xArr[j] + "</td><td>" + yArr[j] + "</td></tr>";
+            // }
 
-            renderizar(valoresX, valoresY)
+            // renderizar(valoresX, valoresY)
         }
 
         // Si se selecciona el método Runge Kutta
@@ -127,16 +128,16 @@
     }
 
     // Función para renderizar
-    function renderizar(valoresX,valoresY) {
+    function renderizar(valores) {
         
         var ctx = document.getElementById('grafico').getContext('2d');
         var grafico = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: valoresX,
+                labels: [1, 2, 3, 4, 5],
                 datasets: [{
                     label: '# of Votes',
-                    data: valoresY,
+                    data: valores,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -166,6 +167,42 @@
                 }
             }
         });
+    }
+
+    function eulerMejorado(funcion, xfinal, xinicial, yinicial, h) {
+        var list = [];
+        var y = yinicial;
+        var x = xinicial;
+        var predictor;
+        console.log("Cuando x es: "+x+" / y es: "+y);
+        list.push({ x : x, y : y });
+        while (x < xfinal) {
+            predictor = y + h * evaluar(y, x, funcion);
+            y = y + (0.5) * (evaluar(y, x, funcion) + evaluar(predictor, x + h, funcion)) * h;
+            x = x + h;
+        console.log("Cuando x es: "+x+" / y es: "+y);
+            list.push({ x : Math.round(x,2), y : y });
+        }
+        return list;
+    }
+
+    function  euler(funcion, xfinal, xinicial, yinicial, h) {
+        var list = [];
+        var y = yinicial;
+        var x = xinicial;
+        list.push({ x : x, y : y });
+        while (x < xfinal)
+        {
+            y = y + h * evaluar(y, x, funcion);
+            x = x + h;
+        console.log("Cuando x es: "+x+" / y es: "+y);
+            list.push({ x : Math.round(x,2), y : y });
+        }
+        return list;
+    }
+
+    function  evaluar(y, x, funcion) {
+        return eval(funcion);
     }
 
 })(document, window);
