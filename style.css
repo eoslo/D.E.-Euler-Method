@@ -35,3 +35,9 @@ table td, table th{
 #final_valueX{
 	display: block;
 }
+canvas{
+
+  width:500px !important;
+  height:500px !important;
+
+}
