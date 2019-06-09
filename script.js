@@ -18,8 +18,8 @@
     calculate.onclick = function() {
         var n = parseInt(getById("n").value);
         var y = parseFloat(getById("yzero").value);
-        var x = parseFloat(getById("xzero").value);
-        var y = parseFloat(getById("yzero").value);
+        var x0 = parseFloat(getById("xzero").value);
+        var y0 = parseFloat(getById("yzero").value);
         var h = parseFloat(getById("h").value);
         var impresionTabla = "";
 
@@ -27,6 +27,9 @@
         if (metodoSeleccionado.value == 1) {
             let valoresX = [];
             let valoresY = [];
+
+            x = x0
+            y = y0
             
             for (var i = 1; i <= n; i++) {
                 x = x + h
@@ -49,28 +52,25 @@
 
             var xArr = [];
             var yArr = [];
-            xArr[0] = x;
-            yArr[0] = y; x
+            xArr[0] = x0;
+            yArr[0] = y0;
+            y = y0
             var fX = finalX.value;
+
             var s = [];
             s[0] = yArr[0];
+
             var m = [];
             var m1, m2;
 
             for (i = 1; xArr[i - 1] < fX; i++) {
-                w = 100.0;
-                xArr[i] = xArr[i - 1] + h;
-                m[i] = calcSlope(xArr[i - 1], yArr[i - 1]);
-                c = 0;
-                while (w > 0.0001) {
-                    m1 = calcSlope(xArr[i], s[c]);
-                    m2 = (m[i] + m1) / 2;
-                    s[c + 1] = yArr[i - 1] + m2 * h;
-                    w = s[c] - s[c + 1];
-                    w = Math.abs(w);
-                    c = c + 1;
-                }
-                yArr[i] = s[c];
+                m1 = eval(getById("mainEquation").value)
+                x = xArr[i - 1] + h
+                xArr[i] = x 
+                s = yArr[i - 1] + h * m1
+                y = y + (h * eval(getById("mainEquation").value))
+                m2 = eval(getById("mainEquation").value)
+                yArr[i] = yArr[i - 1] + h * 0.5 * (m1 * m2)
 
                 valoresX.push(xArr[i]);
                 valoresY.push(yArr[i]);
