@@ -1,5 +1,5 @@
 .container{
-	width: 960px;
+	width: 1360px;
 	margin: 0 auto;
 }
 .left{
@@ -37,7 +37,7 @@ table td, table th{
 }
 canvas{
 
-  width:500px !important;
-  height:500px !important;
+  width:900px !important;
+  height:900px !important;
 
 }

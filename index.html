@@ -6,8 +6,6 @@
 <body>
 
 <div class="container">
-	<h1>Merab Kutalia, Differential Equation Project. Solving DE with Euler's Method</h1>
-
 	<div class="program left">
 		<div class="inputs">
 			<label>Y'</label>
@@ -15,7 +13,7 @@
 	 	</div>
 	 	<div class="inputs">
 	 		<label>Y(0)</label>
-	 		<input id="yzero" type="text" class="form-control" value="1"/>
+	 		<input id="yzero" type="text" class="form-control" value="0"/>
 	 	</div>
 	 	<div class="inputs">
 	 		<label>X(0)</label>
@@ -23,15 +21,15 @@
  		</div>
 
 	 	<div class="inputs">
-	 		<label>Final Value of X</label>
-	 		<input id="final_valueX" type="text" class="form-control" value="0.1"/>
+	 		<label>X(n)</label>
+	 		<input id="final_valueX" type="text" class="form-control" value="2"/>
  		</div>
  		<div class="inputs">
 	 		<label>h</label>
-	 		<input id="h" type="text"  class="form-control" value="0.3"/>
+	 		<input id="h" type="text"  class="form-control" value="0.25"/>
  		</div>
 
- 		<button id="calculate" type="button" value="calculate">GO</button>
+ 		<button id="calculate" type="button" value="calculate">CALCULAR</button>
 
 	</div>
 
@@ -59,10 +57,6 @@
 	</div>
 
 </div>
-
-<footer>
-	<p class="clear" style="text-align:center">Too lazy to use write clean js </p>
-</footer>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
 <script type="text/javascript" src="script.js"></script>

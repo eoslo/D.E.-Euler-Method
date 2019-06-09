@@ -17,7 +17,6 @@
         // Si se selecciona Método de Euler:
         renderizar(euler(funcion, finalX.value, x, y, h), eulerMejorado(funcion, finalX.value, x, y, h), r4(finalX.value, x, y, h, funcion));
 
-
         getById("tableBody").innerHTML = impresionTabla;
     };
 
@@ -38,7 +37,6 @@
             console.log(m1, m2, m3, m4, m, y, x)
             valores.push({x:x, y:y});
         }
-        console.log(valores)
         return valores;
     }
 
@@ -47,7 +45,8 @@
     }
 
     // Función para renderizar
-    function renderizarR4(valores){
+    function renderizar(puntosEuler, puntosMejorado, puntosR4) {
+        console.log(puntosMejorado, puntosEuler, puntosR4)
         var ctx = document.getElementById('grafico').getContext('2d');
         myChart = new Chart(ctx, {
                                 options: {
@@ -79,62 +78,8 @@
                                     }
                                 },
                                 data: {
-                                    datasets: [{
-                                        label: "R4",  
-                                        data: valores,
-                                        borderColor: 'red',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        showLine: true,
-                                        pointBackgroundColor: 'red'
-                                    }],     
-                                },
-                                type: 'scatter'
-                            });
-    }
+                                    datasets: [
 
-    function renderizar(puntosMejorado, puntosEuler, r4) {
-        
-        var ctx = document.getElementById('grafico').getContext('2d');
-        myChart = new Chart(ctx, {
-                                options: {
-                                    scales: {
-                                        xAxes: [{
-                                            type: 'linear',
-                                            position: 'bottom',
-                                            display: true,
-                                            gridLines: {
-                                zeroLineColor: '#333'
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'x'
-                              }
-                                        }],
-                                        yAxes: [{
-                                            type: 'linear',
-                                            display: true,
-                                            position: 'left',
-                                            gridLines: {
-                                zeroLineColor: '#333'
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'y'
-                              }
-                                        }],
-                                    }
-                                },
-                                data: {
-                                    datasets: [{
-                                        label: "Euler Mejorado",  
-                                        data: puntosMejorado,
-                                        borderColor: 'red',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        showLine: true,
-                                        pointBackgroundColor: 'red'
-                                    },
                                     {
                                         label: "Euler",  
                                         data: puntosEuler,
@@ -145,8 +90,17 @@
                                         pointBackgroundColor: 'blue'
                                     },
                                     {
+                                        label: "Euler Mejorado",  
+                                        data: puntosMejorado,
+                                        borderColor: 'red',
+                                        borderWidth: 2,
+                                        fill: false,
+                                        showLine: true,
+                                        pointBackgroundColor: 'red'
+                                    },
+                                    {
                                         label: "R4",  
-                                        data: r4,
+                                        data: puntosR4,
                                         borderColor: 'orange',
                                         borderWidth: 2,
                                         fill: false,
@@ -180,8 +134,7 @@
         var y = yinicial;
         var x = xinicial;
         list.push({ x : x, y : y });
-        while (x < xfinal)
-        {
+        while (x < xfinal) {
             y = y + h * evaluar(y, x, funcion);
             x = x + h;
         console.log("Cuando x es: "+x+" / y es: "+y);
