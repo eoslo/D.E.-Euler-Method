@@ -127,10 +127,9 @@
     }
 
     // Función para renderizar
-    function renderizar(valores) {
-        console.log(valores)
-
-        var ctx = document.getElementById('grafico');
+    function renderizar(valoresX,valoresY) {
+        
+        var ctx = document.getElementById('grafico').getContext('2d');
         var grafico = new Chart(ctx, {
             type: 'line',
             data: {
