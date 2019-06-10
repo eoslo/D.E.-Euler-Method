@@ -6,16 +6,14 @@
 <body>
 
 <div class="container">
-	<h1>Merab Kutalia, Differential Equation Project. Solving DE with Euler's Method</h1>
-
 	<div class="program left">
 		<div class="inputs">
 			<label>Y'</label>
-	 		<input id="mainEquation" class="form-control" type="text" value="4*x*y/2+x*x"/>
+	 		<input id="mainEquation" class="form-control input" type="text" value="4*x*y/2+x*x"/>
 	 	</div>
 	 	<div class="inputs">
 	 		<label>Y(0)</label>
-	 		<input id="yzero" type="text" class="form-control" value="1"/>
+	 		<input id="yzero" type="text" class="form-control" value="0"/>
 	 	</div>
 	 	<div class="inputs">
 	 		<label>X(0)</label>
@@ -23,14 +21,14 @@
  		</div>
 	 	<div class="inputs">
 	 		<label>X(n)</label>
-	 		<input id="xfinal" type="text" class="form-control" value="0.1"/>
+	 		<input id="xfinal" type="text" class="form-control" value="2"/>
  		</div>
  		<div class="inputs">
 	 		<label>h</label>
-	 		<input id="h" type="text"  class="form-control" value="0.3"/>
+	 		<input id="h" type="text"  class="form-control" value="0.25"/>
  		</div>
 
- 		<button id="calculate" type="button" value="calculate">GO</button>
+ 		<button id="calculate" type="button" value="calculate">CALCULAR</button>
 
 	</div>
 
@@ -43,8 +41,12 @@
 				 <thead>
 				   <tr>
 					   <th>n</th>
-					   <th>Xn</th>
-					   <th>Yn</th>
+					   <th>Euler X(n) </th>
+					   <th>Euler Y(n) </th>
+					   <th>Euler Mejorado X(n) </th>
+					   <th>Euler Mejorado Y(n) </th>
+					   <th>Runge Kutta X(n) </th>
+					   <th>Runge Kutta Y(n) </th>
 			     </tr>
 				 </thead>
 				 <tbody id="tableBody">

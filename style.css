@@ -1,5 +1,5 @@
 .container{
-	width: 960px;
+	width: 1360px;
 	margin: 0 auto;
 }
 .left{
@@ -22,22 +22,51 @@ label{
 	margin-top: 20px;
 }
 button{
+	border: none;
+	background-color: white;
+	font-weight: bold;
+	border-radius: 15px;
+	line-height: 2.5;
+	color: #3498db;
 	margin-top: 20px;
+	width: calc(100% - 20px);
 }
 .result{
 	margin-left: 25px;
 }
 table td, table th{
+	color: white;
 	padding: 5px;
-	border: 1px solid #000;
+	border: 1px solid white;
 	border-collapse: collapse;
 }
 #final_valueX{
 	display: block;
 }
 canvas{
+	background-color: white;
+	border-radius: 15px;
+ 	width:900px !important;
+	height:900px !important;
+	padding-right: 60px;  
 
-  width:500px !important;
-  height:500px !important;
-
+}
+label {
+	color: white;
+	font-style: italic;
+}
+body {
+	background-color: #3498db;
+}
+input {
+	border: none;
+	border-radius: 5px;
+	padding: 10px 15px;
+	font: small-caption	;
+	font-weight: bold;
+	font-size: 1.8;
+	width: calc(100% - 50px);
+	color: #3498db;
+	outline: none;
+	line-height: 1.5;
 }
