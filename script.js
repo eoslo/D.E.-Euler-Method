@@ -2,7 +2,7 @@
 
     // Variables Globales
     var metodoSeleccionado = getById('de_method');
-    var finalX = getById('final_valueX');
+    var finalX = getById('xfinal');
     var calculateBtn = getById('calculate');
     var myChart;
 
