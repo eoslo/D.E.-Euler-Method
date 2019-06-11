@@ -20,26 +20,6 @@
         getById("tableBody").innerHTML = impresionTabla;
     };
 
-    function r4(finalX, x, y, h, funcion){
-        var fX = finalX;
-        console.log(finalX, x, x < fX)
-        var i = 0;
-        var valores = [];
-        while (x < fX) {
-            m1 = evaluar(y, x, funcion);
-            m2 = evaluar((y + m1 * h / 2), (x + h / 2), funcion);
-            m3 = evaluar((y + m2 * h / 2), (x + h / 2), funcion);
-            m4 = evaluar((y + m3 * h), (x + h),funcion);
-            m = ((m1 + 2 * m2 + 2 * m3 + m4) / 6);
-            y = y + m * h;
-            x = x + h;
-            i++;
-            console.log(m1, m2, m3, m4, m, y, x)
-            valores.push({x:x, y:y});
-        }
-        return valores;
-    }
-
     function getById(id) {
         return document.getElementById(id);
     }
@@ -56,25 +36,35 @@
                                             position: 'bottom',
                                             display: true,
                                             gridLines: {
-                                zeroLineColor: '#333'
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'x'
-                              }
+                                            zeroLineColor: '#333'
+                                        },
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'x'
+                                          }
                                         }],
                                         yAxes: [{
                                             type: 'linear',
                                             display: true,
                                             position: 'left',
                                             gridLines: {
-                                zeroLineColor: '#333'
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'y'
-                              }
+                                            zeroLineColor: '#333'
+                                        },
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'y'
+                                          }
                                         }],
+                                    },
+                                    plugins: {
+                                        zoom: {
+                                            zoom: {
+                                                enabled: true,
+                                                drag: true,
+                                                mode: 'x',
+                                                speed: 0.05
+                                            }
+                                        }
                                     }
                                 },
                                 data: {
@@ -83,15 +73,6 @@
                                     {
                                         label: "Euler",  
                                         data: puntosEuler,
-                                        borderColor: 'blue',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        showLine: true,
-                                        pointBackgroundColor: 'blue'
-                                    },
-                                    {
-                                        label: "Euler Mejorado",  
-                                        data: puntosMejorado,
                                         borderColor: 'red',
                                         borderWidth: 2,
                                         fill: false,
@@ -99,16 +80,26 @@
                                         pointBackgroundColor: 'red'
                                     },
                                     {
-                                        label: "R4",  
-                                        data: puntosR4,
+                                        label: "Euler Mejorado",  
+                                        data: puntosMejorado,
                                         borderColor: 'orange',
                                         borderWidth: 2,
                                         fill: false,
                                         showLine: true,
-                                        pointBackgroundColor: 'blue'
+                                        pointBackgroundColor: 'orange'
+                                    },
+                                    {
+                                        label: "R4",  
+                                        data: puntosR4,
+                                        borderColor: 'green',
+                                        borderWidth: 2,
+                                        fill: false,
+                                        showLine: true,
+                                        pointBackgroundColor: 'green'
                                     }],     
                                 },
-                                type: 'scatter'
+                                type: 'scatter',
+
                             });
     }
 
@@ -141,6 +132,27 @@
             list.push({ x : x, y : y });
         }
         return list;
+    }
+    
+
+    function r4(finalX, x, y, h, funcion){
+        var fX = finalX;
+        console.log(finalX, x, x < fX)
+        var i = 0;
+        var valores = [];
+        while (x < fX) {
+            m1 = evaluar(y, x, funcion);
+            m2 = evaluar((y + m1 * h / 2), (x + h / 2), funcion);
+            m3 = evaluar((y + m2 * h / 2), (x + h / 2), funcion);
+            m4 = evaluar((y + m3 * h), (x + h),funcion);
+            m = ((m1 + 2 * m2 + 2 * m3 + m4) / 6);
+            y = y + m * h;
+            x = x + h;
+            i++;
+            console.log(m1, m2, m3, m4, m, y, x)
+            valores.push({x:x, y:y});
+        }
+        return valores;
     }
 
     function  evaluar(y, x, funcion) {
