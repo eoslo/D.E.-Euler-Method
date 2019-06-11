@@ -9,7 +9,7 @@
 	<div class="program left">
 		<div class="inputs">
 			<label>Y'</label>
-	 		<input id="mainEquation" class="form-control" type="text" value="4*x*y/2+x*x"/>
+	 		<input id="mainEquation" class="form-control input" type="text" value="4*x*y/2+x*x"/>
 	 	</div>
 	 	<div class="inputs">
 	 		<label>Y(0)</label>
@@ -19,10 +19,9 @@
 	 		<label>X(0)</label>
 	 		<input id="xzero" type="text" class="form-control" value="0"/>
  		</div>
-
 	 	<div class="inputs">
 	 		<label>X(n)</label>
-	 		<input id="final_valueX" type="text" class="form-control" value="2"/>
+	 		<input id="xfinal" type="text" class="form-control" value="2"/>
  		</div>
  		<div class="inputs">
 	 		<label>h</label>
@@ -42,14 +41,17 @@
 				 <thead>
 				   <tr>
 					   <th>n</th>
-					   <th>Xn</th>
-					   <th>Yn</th>
+					   <th>Euler X(n) </th>
+					   <th>Euler Y(n) </th>
+					   <th>Euler Mejorado X(n) </th>
+					   <th>Euler Mejorado Y(n) </th>
+					   <th>Runge Kutta X(n) </th>
+					   <th>Runge Kutta Y(n) </th>
 			     </tr>
 				 </thead>
 				 <tbody id="tableBody">
 
 				 </tbody>
-
 			 	</table>
 			</code>
 		</pre>
@@ -57,12 +59,10 @@
 	</div>
 
 </div>
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
 <script type="text/javascript" src="script.js"></script>
-
 </body>
 </html>
