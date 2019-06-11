@@ -39,7 +39,6 @@
         while (x < xfinal) {
             y = y + h * evaluar(y, x, funcion);
             x = x + h;
-        console.log("Cuando x es: "+x+" / y es: "+y);
         valores.push({ x : x, y : y });
         }
         return valores;
@@ -51,13 +50,11 @@
         var y = yinicial;
         var x = xinicial;
         var predictor;
-        console.log("Cuando x es: "+x+" / y es: "+y);
         valores.push({ x : x, y : y });
         while (x < xfinal) {
             predictor = y + h * evaluar(y, x, funcion);
             y = y + (0.5) * (evaluar(y, x, funcion) + evaluar(predictor, x + h, funcion)) * h;
             x = x + h;
-        console.log("Cuando x es: "+x+" / y es: "+y);
         valores.push({ x : x, y : y });
         }
         return valores;
@@ -79,13 +76,28 @@
             y = y + m * h;
             x = x + h;
             i++;
-            console.log(m1, m2, m3, m4, m, y, x)
             valores.push({x : x, y : y});
         }
         return valores;
     }
     
     function  evaluar(y, x, funcion) {
+        
+        while(funcion.includes("sin")){
+            let sin = funcion.match(/sin\((.)\)/)[1] === "x" ? Math.sin(x) : Math.sin(y);
+            let variable = funcion.match(/sin\((.)\)/)[1];
+            funcion = funcion.replace("sin("+variable+")",sin);
+        }
+        while(funcion.includes("cos")){
+            let cos = funcion.match(/cos\((.)\)/)[1] === "x" ? Math.cos(x) : Math.cos(y);
+            let variable = funcion.match(/cos\((.)\)/)[1];
+            funcion = funcion.replace("cos("+variable+")",cos);
+        }
+        while(funcion.includes("sqrt")){
+            let sqrt = funcion.match(/sqrt\((.)\)/)[1] === "x" ? Math.sqrt(x) : Math.sqrt(y);
+            let variable = funcion.match(/sqrt\((.)\)/)[1];
+            funcion = funcion.replace("sqrt("+variable+")",sqrt);
+        }
         return eval(funcion);
     }
 
@@ -95,9 +107,43 @@
 
     // Función para Renderizar
     function renderizar(puntosEuler, puntosMejorado, puntosR4) {
-        console.log(puntosMejorado, puntosEuler, puntosR4)
         var ctx = document.getElementById('grafico').getContext('2d');
-        myChart = new Chart(ctx, {
+        let data ={
+                                    datasets: [
+                                    {
+                                        label: "Euler",  
+                                        data: puntosEuler,
+                                        borderColor: 'red',
+                                        borderWidth: 2,
+                                        fill: false,
+                                        showLine: true,
+                                        pointBackgroundColor: 'red'
+                                    },
+                                    {
+                                        label: "Euler Mejorado",  
+                                        data: puntosMejorado,
+                                        borderColor: 'orange',
+                                        borderWidth: 2,
+                                        fill: false,
+                                        showLine: true,
+                                        pointBackgroundColor: 'orange'
+                                    },
+                                    {
+                                        label: "R4",  
+                                        data: puntosR4,
+                                        borderColor: 'green',
+                                        borderWidth: 2,
+                                        fill: false,
+                                        showLine: true,
+                                        pointBackgroundColor: 'green'
+                                    }],     
+                                };
+        if(myChart){
+            myChart.data = data
+            myChart.update();
+        }
+        else{
+            myChart = new Chart(ctx, {
                                 options: {
                                     scales: {
                                         xAxes: [{
@@ -146,39 +192,11 @@
                                         }
                                     }
                                 },
-                                data: {
-                                    datasets: [
-                                    {
-                                        label: "Euler",  
-                                        data: puntosEuler,
-                                        borderColor: 'red',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        showLine: true,
-                                        pointBackgroundColor: 'red'
-                                    },
-                                    {
-                                        label: "Euler Mejorado",  
-                                        data: puntosMejorado,
-                                        borderColor: 'orange',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        showLine: true,
-                                        pointBackgroundColor: 'orange'
-                                    },
-                                    {
-                                        label: "R4",  
-                                        data: puntosR4,
-                                        borderColor: 'green',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        showLine: true,
-                                        pointBackgroundColor: 'green'
-                                    }],     
-                                },
+                                data: data,
                                 type: 'scatter',
 
                             });
+        }        
     }
 
 })(document, window);
