@@ -127,11 +127,21 @@
                                     },
                                     plugins: {
                                         zoom: {
+                                            pan: {
+                                              enabled: true,
+                                              mode: "xy",
+                                              speed: 5,
+                                              threshold: 10
+                                            },
                                             zoom: {
-                                                enabled: true,
-                                                drag: true,
-                                                mode: 'x',
-                                                speed: 0.05
+                                              enabled: true,
+                                              drag: false,
+                                              mode: "xy",
+                                              speed: 0.1,
+                                              limits: {
+                                                max: 5,
+                                                min: 0.5
+                                              }
                                             }
                                         }
                                     }
